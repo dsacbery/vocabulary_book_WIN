@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vocabulary</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Vocabulary</p>
+          <h1>Study Deck</h1>
+        </div>
+        <div class="top-actions" aria-label="Import and export controls">
+          <label class="icon-button" title="Import CSV">
+            <span>Import</span>
+            <input id="import-input" type="file" accept=".csv,text/csv" hidden>
+          </label>
+          <a class="icon-button" href="/api/export" title="Export CSV">Export</a>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="unit-rail" aria-label="Units">
+          <p class="section-label">Units</p>
+          <div id="unit-list" class="unit-list"></div>
+        </aside>
+
+        <section class="study-area" aria-label="Study card">
+          <div class="stats-row" aria-label="Unit progress">
+            <div><strong id="stat-total">0</strong><span>Total</span></div>
+            <div><strong id="stat-known">0</strong><span>Known</span></div>
+            <div><strong id="stat-review">0</strong><span>Review</span></div>
+          </div>
+
+          <div class="mode-switch" aria-label="Study mode">
+            <button id="mode-study" class="active" type="button" aria-pressed="true">Study</button>
+            <button id="mode-quiz" type="button" aria-pressed="false">Quiz</button>
+          </div>
+
+          <article class="study-card">
+            <p class="section-label" id="card-unit">Unit 1</p>
+            <h2 id="card-word">No words yet</h2>
+            <p id="card-phonetic" class="phonetic">Add a word to start studying.</p>
+            <div id="card-meaning" class="meaning hidden"></div>
+            <div id="card-example" class="example hidden"></div>
+            <div class="card-actions">
+              <button id="toggle-meaning" type="button">Show meaning</button>
+              <button id="known-button" type="button">Known</button>
+              <button id="review-button" type="button">Review later</button>
+              <button id="next-button" type="button">Next</button>
+            </div>
+          </article>
+
+          <section id="quiz-panel" class="quiz-panel hidden" aria-label="Quiz">
+            <p class="section-label">Quiz</p>
+            <h2 id="quiz-word">No words yet</h2>
+            <p id="quiz-prompt" class="quiz-prompt">Type the Chinese meaning for the word.</p>
+            <form id="quiz-form" class="quiz-form">
+              <label class="visually-hidden" for="quiz-answer">Chinese meaning answer</label>
+              <input id="quiz-answer" type="text" placeholder="输入中文释义" autocomplete="off">
+              <button id="quiz-submit" type="submit">Check</button>
+            </form>
+            <p id="quiz-feedback" class="quiz-feedback" aria-live="polite"></p>
+            <div class="quiz-actions">
+              <button id="quiz-reveal" type="button">Reveal</button>
+              <button id="quiz-next" type="button">Next</button>
+            </div>
+          </section>
+        </section>
+
+        <aside class="side-panel" aria-label="Word tools">
+          <section class="panel">
+            <p class="section-label">Add word</p>
+            <form id="lookup-form">
+              <label class="visually-hidden" for="word-input">English word</label>
+              <input id="word-input" type="text" placeholder="Enter English word" autocomplete="off">
+              <button type="submit">Lookup</button>
+            </form>
+            <form id="save-form" class="edit-form hidden">
+              <label class="visually-hidden" for="edit-word">Word</label>
+              <input id="edit-word" type="text" readonly>
+              <label class="visually-hidden" for="edit-phonetic">Phonetic</label>
+              <input id="edit-phonetic" type="text" placeholder="Phonetic">
+              <label class="visually-hidden" for="edit-pos">Part of speech</label>
+              <input id="edit-pos" type="text" placeholder="Part of speech">
+              <label class="visually-hidden" for="edit-meaning">Chinese meaning</label>
+              <textarea id="edit-meaning" placeholder="Chinese meaning"></textarea>
+              <label class="visually-hidden" for="edit-example">Example</label>
+              <textarea id="edit-example" placeholder="Example"></textarea>
+              <input id="edit-source" type="hidden">
+              <button type="submit">Save word</button>
+            </form>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <p class="section-label">Unit words</p>
+              <label class="visually-hidden" for="search-input">Search words</label>
+              <input id="search-input" type="search" placeholder="Search">
+            </div>
+            <div id="word-list" class="word-list"></div>
+          </section>
+
+          <p id="message" class="message" role="status" aria-live="polite"></p>
+        </aside>
+      </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
